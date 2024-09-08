@@ -1,0 +1,8 @@
+.custom-bg {
+    background: linear-gradient(to bottom right, #f7f7f7, #f7f7f7, #f8c4d8, #F9B1CD, #fc9bd5, #fcd2fd);
+}
+
+html,
+body {
+    font-family: "Poppins", system-ui !important;
+}
