@@ -6,7 +6,10 @@
             <p class="text-balance text-lg text-gray-950 my-3">{{ slogan }}</p>
         </div>
         <div class="mt-16 w-2/3 mx-auto">
-            <img class="mx-auto w-full rounded-t-xl rounded-tr-xl" src="../assets/images/hero-image.jpg"  alt="hero image">
+            <img 
+                class="mx-auto w-full rounded-t-xl rounded-tr-xl" 
+                src="../../public/images/hero-image.jpg"  
+                alt="hero image">
         </div>
     </header>
 </template>
