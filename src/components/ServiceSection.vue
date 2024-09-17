@@ -1,36 +1,36 @@
 <template>
-    <div class="main_hero text-center w-11/12 mx-auto mt-40">
-        <h4 class="text-base text-blue-800 capitalize font-medium">services</h4>
-        <h1 class="text-5xl my-2 capitalize font-semibold text-black text-opacity-90">{{ titles[0].bigTitle }}</h1>
-        <p class="font-light text-balance text-xl text-opacity-80 lowercase text-gray-900">{{ titles[0].content }}</p>
-    </div>
+    <heroSection :heading="titles[0].heading" :title="titles[0].title" :slogan="titles[0].content"/>
     <div class="w-11/12 mx-auto flex flex-col">
-        <div v-for="(item, index) in ServicesContent" 
-            :key="index" 
-            :class="['box_service flex items-center justify-center', reverseBox(index) ? 'flex-row-reverse ml-12' : '']">
+        <div v-for="(item, index) in ServicesContent" :key="index" :class="['box_service flex items-center justify-center', reverseBox(index) ? 'flex-row-reverse ml-12' : '']">
             <div class="w-1/2">
-                <img :src="item.image" class="w-3/" alt="image of service">
+                <img :src="item.image" class="w-3/" :alt="`Image of ${item.title}`">
             </div>
             <div class="w-1/2">
                 <h2 class="text-4xl text-gray-950 text-opacity-90 font-semibold">{{ item.title }}</h2>
-                <p
-                    class="w-fit inline-block my-4 text-opacity-70 lowercase text-balance font-normal text-lg text-gray-900">
-                    {{ item.content }}</p>
-                <a class="px-8 py-2 capitalize inline-block leading-none rounded-md text-xl font-normal bg-indigo-700 text-white"
-                    :href="item.url">{{ item.url_text }}</a>
+                <p class="w-fit inline-block my-4 text-opacity-70 lowercase text-balance font-normal text-lg text-gray-900">{{ item.content }}</p>
+                <CustomLink :href="item.url" class="px-8 py-2 capitalize inline-block leading-none rounded-sm text-lg font-light bg-indigo-700 text-white">{{ item.url_text }}</CustomLink>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+
+import CustomLink from './CustomLink.vue';
+import HeroSection from './HeroSection.vue'; 
+
 export default {
     name: "ServiceSection",
+    components: {
+        CustomLink,
+        HeroSection
+    },
     data() {
         return {
             titles: [
                 {
-                    bigTitle: "provide many services that cover all you needs",
+                    heading: "Services",
+                    title: "provide many services that cover all you needs",
                     content: "Discover the amazing  features of our website translator that make your multilingual journey easier! Our translator helps  you communicate effortlessly, making work simpler and opening up a world of seamless communication."
                 },
             ],
