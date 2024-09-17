@@ -2,16 +2,16 @@
     <div class="p-5" id="navbarContainer">
         <div id="navbar"  class="navbar flex justify-between items-center text-white w-8/12 mx-auto py-5 px-6 my-4 rounded-full shadow-lg bg-black">
             <section class="logo">
-                <a href="index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <CustomLink :href="brandUrl" class="flex items-center space-x-3">
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                         {{ brandName }}
                     </span>
-                </a>
+                </CustomLink>
             </section>
             <section class="links">
                 <ul class="flex">
                     <li class="mx-2" v-for="(link, index) in removeLastLink()" :key="index">
-                        <a class="font-light capitalize" :href="link.url">{{ link.text }}</a>
+                        <CustomLink :href="link.url" class="font-light capitalize" >{{ link.text }}</CustomLink>
                     </li>
                 </ul>
             </section>
@@ -22,12 +22,19 @@
 
 
 <script>
+
+import CustomLink from './CustomLink.vue';
+
 export default {
     name: "NavBar",
+    components: {
+        CustomLink,
+    },
     data() {
         return {
             temp: "",
             brandName: "Errehub",
+            brandUrl: "index.html",
             links: [
                 { text: "Home", url: "index.html" },
                 { text: "Services", url: "services.html" },
