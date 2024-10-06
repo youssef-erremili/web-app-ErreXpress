@@ -11,10 +11,19 @@
 <script>
 export default {
     name: "HeroSection",
-    props: [
-        "heading",
-        "title",
-        "slogan"
-    ]
+    props: {
+        heading: {
+            type: String,
+            required: true
+        },
+        title: {
+            type: String,
+            required: true
+        },
+        slogan: {
+            type: String,
+            required: true
+        }
+    }
 }
 </script>
