@@ -8,7 +8,7 @@
             <div class="w-1/2">
                 <h2 class="text-4xl text-gray-950 text-opacity-90 font-semibold">{{ item.title }}</h2>
                 <p class="w-fit inline-block my-4 text-opacity-70 lowercase text-balance font-normal text-lg text-gray-900">{{ item.content }}</p>
-                <CustomLink :href="item.url" class="px-8 py-2 capitalize inline-block leading-none rounded-sm text-lg font-light bg-indigo-700 text-white">{{ item.url_text }}</CustomLink>
+                <!-- <CustomLink :href="item.url" class="px-8 py-2 capitalize inline-block leading-none rounded-sm text-lg font-light bg-indigo-700 text-white">{{ item.url_text }}</CustomLink> -->
             </div>
         </div>
     </div>
@@ -16,15 +16,9 @@
 
 <script>
 
-import CustomLink from './CustomLink.vue';
-import HeroSection from './HeroSection.vue'; 
 
 export default {
     name: "ServiceSection",
-    components: {
-        CustomLink,
-        HeroSection
-    },
     data() {
         return {
             titles: [
