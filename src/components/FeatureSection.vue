@@ -1,5 +1,5 @@
 <template>
-    <heroSection :heading="titles[0].heading" :title="titles[0].title" :slogan="titles[0].content"/>
+    <heroSection class="bg-red" :heading="titles[0].heading" :title="titles[0].title" :slogan="titles[0].content"/>
     <div class="box_feature flex justify-evenly w-11/12 my-8 mx-auto">
         <div v-for="(box, index) in boxContant" :key="index" class="box w-1/3 h-auto p-7 m-4 rounded-xl text-center shadow-md bg-slate-50">
             <div class="inline-block">
@@ -13,13 +13,9 @@
 
 <script>
 
-import HeroSection from './HeroSection.vue';
 
 export default {
     name: "FeatureSection",
-    components: {
-        HeroSection
-    },
     data() {
         return {
             titles: [
