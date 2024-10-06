@@ -277,6 +277,14 @@ export default {
                     console.error('Failed to read clipboard contents: ', err)
                 })
         },
+
+        //copy to textarea source method
+        CopyFrom() {
+            if (this.translateTo.trim() !== '') {
+                this.$refs.textarea.focus();
+                document.execCommand('copy');
+            }
+        }
     }
 }
 </script>
