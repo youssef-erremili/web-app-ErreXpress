@@ -264,6 +264,19 @@ export default {
                 this.placesource = 'start typing'
             }
         },
+
+        //copy to textarea source method
+        CopyTo() {
+            navigator.clipboard
+                .readText()
+                .then((text) => {
+                    this.translateFrom = text.trim()
+                    this.translateEngine()
+                })
+                .catch((err) => {
+                    console.error('Failed to read clipboard contents: ', err)
+                })
+        },
     }
 }
 </script>
