@@ -244,6 +244,16 @@ export default {
             this.source = this.target
             this.target = this.languageChange
         },
+
+        //change direction method
+        textToRight() {
+            if (this.target === 'ar-SA') {
+                this.placetarget = 'الترجمة'
+                return 'reverse-text-right'
+            } else {
+                this.placetarget = 'translation'
+            }
+        },
     }
 }
 </script>
