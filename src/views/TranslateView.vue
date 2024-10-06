@@ -231,6 +231,19 @@ export default {
             this.translateTo = ''
             this.placesource = 'enter your text'
         },
+
+        // this method to exchange values between source and target fields
+        exChange() {
+            // exhcange text area values
+            this.exchange = this.translateFrom
+            this.translateFrom = this.translateTo
+            this.translateTo = this.exchange
+
+            // exhcange text select tag values
+            this.languageChange = this.source
+            this.source = this.target
+            this.target = this.languageChange
+        },
     }
 }
 </script>
