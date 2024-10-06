@@ -1,5 +1,5 @@
 <template>
-    <a :href="url" rel="noopener noreferrer">
+    <a href="url" rel="noopener noreferrer">
         <slot></slot>
     </a>
 </template>
@@ -7,8 +7,11 @@
 <script>
 export default {
     name: "CustomLink",
-    props: [
-        "url",
-    ]
+    props: {
+        url: {
+            type: String,
+            required: true
+        }
+    }
 }
 </script>
