@@ -218,6 +218,12 @@ export default {
             }
         },
 
+        // This method to handle related keyword
+        handleKeyWord(data) {
+            data.forEach((element) => {
+                this.relatedKeyWord.push(element.translation)
+            })
+        },
     }
 }
 </script>
