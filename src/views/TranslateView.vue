@@ -188,6 +188,26 @@ export default {
         this.notyf = new Notyf()
     },
 
-    
+    methods: {
+        // this method is fetch data ferom server using Api and Fetch method
+        translateEngine() {
+            this.placetarget = this.placetarget + '...'
+            this.relatedKeyWord = []
+            let appUrl = `https://api.mymemory.translated.net/get?q=${this.translateFrom.trim()}!&langpair=${this.source
+                }|${this.target}`
+            fetch(appUrl)
+                .then((response) => response.json())
+                .then((data) => {
+                    this.translateTo = data.responseData.translatedText
+                    this.placetarget = 'translation'
+                    this.handleKeyWord(data.matches)
+                })
+                .catch((error) => {
+                    this.notyf.error('Language not supported.')
+                    console.error('Language not supported.', error)
+                })
+        },
+
+    }
 }
 </script>
