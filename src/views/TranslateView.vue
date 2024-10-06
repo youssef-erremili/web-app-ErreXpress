@@ -16,7 +16,7 @@
                             <textarea id="source" name="translateFrom" spellcheck="false" autocapitalize="off"
                                 autocorrect="off" autocomplete="off" :placeholder="placesource" cols="30" rows="10"
                                 :class="textToLeft()" v-model="translateFrom"
-                                class="w-full h-64 rounded-md font-normal py-2 px-3 outline-none text-xl resize-none border border-gray-200 bg-gray-100"></textarea>
+                                class="w-full h-64 rounded-md font-normal py-4 px-3 pr-12 outline-none text-xl resize-none border border-gray-200 bg-gray-100"></textarea>
                             <button type="button" class="absolute top-2 right-2 z-30 text-3xl" @click="clearTextarea">
                                 <ion-icon name="close-outline"></ion-icon>
                             </button>
@@ -34,7 +34,7 @@
                                 autocorrect="off" autocomplete="off" :placeholder="placetarget" cols="30" rows="10"
                                 v-model="translateTo" readonly v-on:focus="$event.target.select()" ref="textarea"
                                 :class="textToRight()"
-                                class="w-full h-64 rounded-md font-normal py-2 px-3 pr-4 outline-none text-xl resize-none border border-gray-200 bg-gray-100 ml-1"></textarea>
+                                class="w-full h-64 rounded-md font-normal py-4 px-3 pr-4 outline-none text-xl resize-none border border-gray-200 bg-gray-100 ml-1"></textarea>
                             <section class="w-full absolute -mt-12 p-2 z-50">
                                 <button type="button" @click="CopyFrom()">
                                     <ion-icon class="text-2xl font-normal pl-1" name="copy-outline"></ion-icon>
@@ -43,8 +43,7 @@
                         </div>
                     </div>
                     <div class="block w-fit mx-auto">
-                        <button type="submit"
-                            class="bg-blue-700 py-2 px-6 capitalize text-lg font-light rounded-md mx-auto text-white">
+                        <button type="submit" class="bg-blue-700 py-2 px-6 capitalize text-lg font-light rounded-md mx-auto text-white">
                             translate
                         </button>
                     </div>
