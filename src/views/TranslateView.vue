@@ -208,6 +208,16 @@ export default {
                 })
         },
 
+        // handler the error of empty field
+        handleEmptyInp() {
+            if (this.translateFrom.trim() === '') {
+                this.notyf.error('Type text for translation.')
+                return this.notyf.dismissAll()
+            } else {
+                return this.translateEngine()
+            }
+        },
+        
     }
 }
 </script>
