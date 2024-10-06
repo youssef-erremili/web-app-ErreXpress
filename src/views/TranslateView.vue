@@ -254,6 +254,16 @@ export default {
                 this.placetarget = 'translation'
             }
         },
+
+        //change direction method
+        textToLeft() {
+            if (this.source === 'ar-SA') {
+                this.placesource = 'أدخل النص المراد ترجمته'
+                return 'reverse-text-left'
+            } else {
+                this.placesource = 'start typing'
+            }
+        },
     }
 }
 </script>
