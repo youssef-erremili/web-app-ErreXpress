@@ -224,6 +224,13 @@ export default {
                 this.relatedKeyWord.push(element.translation)
             })
         },
+
+        // Clear the textarea fields
+        clearTextarea() {
+            this.translateFrom = ''
+            this.translateTo = ''
+            this.placesource = 'enter your text'
+        },
     }
 }
 </script>
