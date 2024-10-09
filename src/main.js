@@ -11,7 +11,7 @@ import HeroSection from "./components/HeroSection.vue";
 import FeatureSection from "./components/FeatureSection.vue";
 import ServiceSection from "./components/ServiceSection.vue";
 import FooterSection from "./components/FooterSection.vue";
-// import SelectInput from "./components/SelectInput.vue";
+import InputField from '@/components/InputField.vue';
 
 const app = createApp(App)
 app.component("NavBar", NavBar)
@@ -20,7 +20,7 @@ app.component("HeroSection", HeroSection)
 app.component("FeatureSection", FeatureSection)
 app.component("ServiceSection", ServiceSection)
 app.component("FooterSection", FooterSection)
-// app.component("SelectInput", SelectInput)
+app.component("InputField", InputField)
 
 
 
