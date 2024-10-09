@@ -2,7 +2,7 @@
     <div>
         <main>
             <div class="w-11/12 mx-auto mt-11">
-                <form @submit.prevent="handleEmptyInp">
+                <form @submit.prevent="handleEmptyInp()">
                     <div class="options flex items-center justify-between py-1">
                         <SelectInput v-model="source" name="source" :options="langaueSymbole" />
                         <button type="button" class="cursor-pointer text-3xl" @click="exChange">
@@ -13,9 +13,12 @@
                     </div>
                     <div class="w-full flex h-auto justify-items-center justify-center">
                         <div class="w-full relative overflow-hidden">
+                            <section class="absolute right-2 bottom-2 z-30 p-2">
+                                <span :class="alertColor">{{ sizeLength }} / {{ limitLength }}</span>
+                            </section>
                             <textarea id="source" name="translateFrom" spellcheck="false" autocapitalize="off"
                                 autocorrect="off" autocomplete="off" :placeholder="placesource" cols="30" rows="10"
-                                :class="textToLeft()" v-model="translateFrom"
+                                :class="textToLeft()" @input="preventTyping" v-model="translateFrom"
                                 class="w-full h-64 rounded-md font-normal py-4 px-3 pr-12 outline-none text-xl resize-none border border-gray-200 bg-gray-100"></textarea>
                             <button type="button" class="absolute top-2 right-2 z-30 text-3xl" @click="clearTextarea">
                                 <ion-icon name="close-outline"></ion-icon>
@@ -34,7 +37,8 @@
                                 autocorrect="off" autocomplete="off" :placeholder="placetarget" cols="30" rows="10"
                                 v-model="translateTo" readonly v-on:focus="$event.target.select()" ref="textarea"
                                 :class="textToRight()"
-                                class="w-full h-64 rounded-md font-normal py-4 px-3 pr-4 outline-none text-xl resize-none border border-gray-200 bg-gray-100 ml-1"></textarea>
+                                class="w-full h-64 rounded-md font-normal py-4 px-3 pr-4 outline-none text-xl resize-none border border-gray-200 bg-gray-100 ml-1">
+                            </textarea>
                             <section class="w-full absolute -mt-12 p-2 z-50">
                                 <button type="button" @click="CopyFrom()">
                                     <ion-icon class="text-2xl font-normal pl-1" name="copy-outline"></ion-icon>
@@ -43,7 +47,7 @@
                         </div>
                     </div>
                     <div class="block w-fit mx-auto">
-                        <button type="submit" class="bg-blue-700 py-2 px-6 capitalize text-lg font-light rounded-md mx-auto text-white">
+                        <button type="submit" :disabled="Isdisabled" :class="btnColor" class="py-2 px-6 capitalize text-lg font-light rounded-md mx-auto text-white">
                             translate
                         </button>
                     </div>
@@ -57,6 +61,7 @@
                 </ul>
             </div>
         </main>
+
     </div>
 </template>
 
@@ -64,11 +69,13 @@
 import { Notyf } from 'notyf'
 import 'notyf/notyf.min.css'
 import SelectInput from '@/components/SelectInput.vue'
+import InputField from '@/components/InputField.vue';
 
 export default {
     name: 'TranslateView',
     components: {
         SelectInput,
+        InputField
     },
     data() {
         return {
@@ -82,6 +89,11 @@ export default {
             languageChange: '',
             relatedKeyWord: [],
             notyf: null,
+            sizeLength: 0,
+            limitLength: 150,
+            Isdisabled: false,
+            alertColor: "",
+            btnColor: "bg-indigo-500",
             langaueSymbole: [
                 { value: 'am-ET', text: 'Amharic' },
                 { value: 'ar-SA', text: 'Arabic' },
@@ -190,7 +202,7 @@ export default {
     methods: {
         // this method is fetch data ferom server using Api and Fetch method
         translateEngine() {
-            this.placetarget = this.placetarget + '...'
+            this.placetarget = "translating..."
             this.relatedKeyWord = []
             let appUrl = `https://api.mymemory.translated.net/get?q=${this.translateFrom.trim()}!&langpair=${this.source
                 }|${this.target}`
@@ -202,8 +214,8 @@ export default {
                     this.handleKeyWord(data.matches)
                 })
                 .catch((error) => {
-                    this.notyf.error('Language not supported.')
-                    console.error('Language not supported.', error)
+                    this.notyf.error('Failed to fetch data content.')
+                    console.error('Failed to fetch data content.', error)
                 })
         },
 
@@ -281,9 +293,25 @@ export default {
         CopyFrom() {
             if (this.translateTo.trim() !== '') {
                 this.$refs.textarea.focus();
-                document.execCommand('copy');
+                this.document.execCommand('copy');
             }
-        }
-    }
+        },
+
+        // Prevent user from typing when he reach the limits  
+        preventTyping() {
+            this.sizeLength = this.translateFrom.length
+            if (this.translateFrom.length >= this.limitLength) {
+                this.alertColor = "text-red-600"
+                this.btnColor = "bg-gray-400"
+                this.Isdisabled = true
+            }
+            else {
+                this.alertColor = ""
+                this.btnColor = "bg-indigo-500"
+                this.Isdisabled = false
+            }
+        },
+        
+    },
 }
 </script>
