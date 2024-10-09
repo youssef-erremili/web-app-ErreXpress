@@ -47,8 +47,9 @@
                         </div>
                     </div>
                     <div class="block w-fit mx-auto">
-                        <button type="submit" :disabled="Isdisabled" :class="btnColor" class="py-2 px-6 capitalize text-lg font-light rounded-md mx-auto text-white">
-                            translate
+                        <button type="submit" :disabled="Isdisabled" :class="btnColor" class="flex items-center py-2 px-6 capitalize text-lg font-light rounded-md mx-auto text-white">
+                            <LoaderSvg :class="isLoading"/>
+                            {{ buttonValue }}
                         </button>
                     </div>
                 </form>
@@ -70,12 +71,14 @@ import { Notyf } from 'notyf'
 import 'notyf/notyf.min.css'
 import SelectInput from '@/components/SelectInput.vue'
 import InputField from '@/components/InputField.vue';
+import LoaderSvg from '@/components/LoaderSvg.vue';
 
 export default {
     name: 'TranslateView',
     components: {
         SelectInput,
-        InputField
+        InputField,
+        LoaderSvg
     },
     data() {
         return {
@@ -83,6 +86,8 @@ export default {
             placesource: 'Start typing',
             translateTo: '',
             exchange: '',
+            buttonValue: "translate",
+            isLoading: 'hidden',
             source: 'en-GB',
             target: 'ar-SA',
             placetarget: 'translation',
@@ -202,15 +207,17 @@ export default {
     methods: {
         // this method is fetch data ferom server using Api and Fetch method
         translateEngine() {
-            this.placetarget = "translating..."
+            this.buttonValue = "Loading..."
+            this.isLoading = "block"
             this.relatedKeyWord = []
             let appUrl = `https://api.mymemory.translated.net/get?q=${this.translateFrom.trim()}!&langpair=${this.source
                 }|${this.target}`
             fetch(appUrl)
                 .then((response) => response.json())
                 .then((data) => {
+                    this.buttonValue = "translate"
+                    this.isLoading = "hidden"
                     this.translateTo = data.responseData.translatedText
-                    this.placetarget = 'translation'
                     this.handleKeyWord(data.matches)
                 })
                 .catch((error) => {
