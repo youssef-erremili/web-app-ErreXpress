@@ -1,6 +1,6 @@
 :root{
     --bg-white: #F7F8FB;
-    --blue-color: #302f2f;
+    --blue-color: #313131;
 }
 
 .custom-bg {
@@ -8,7 +8,7 @@
 }
 
 ::placeholder {
-    font-size: 1.1rem !important;
+    font-size: 1.01rem !important;
     color: var(--blue-color) !important;
     font-weight: 400 !important;
     user-select: none !important;
