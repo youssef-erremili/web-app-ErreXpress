@@ -1,15 +1,19 @@
 <template>
     <div>
+        <hero-section :CustomId="'heading'" :CustomClass="'mt-20'" :heading="'Free translation Tool'"
+            :slogan="'Quickly translate sentences, essays, emails, articles, and more'" />
+    </div>
+    <div>
         <main>
             <div class="w-11/12 mx-auto mt-11">
                 <form @submit.prevent="handleEmptyInp()">
                     <div class="options flex items-center justify-between py-1">
                         <SelectInput v-model="source" name="source" :options="langaueSymbole" />
-                        <button type="button" class="cursor-pointer text-3xl" @click="exChange">
+                        <button type="button" class="cursor-pointer text-3xl" @click="exChange()">
                             <ion-icon name="swap-horizontal-outline"></ion-icon>
                         </button>
                         <SelectInput v-model="target" name="target" :options="langaueSymbole"
-                            @change="tranaslateOnChange" />
+                            @change="tranaslateOnChange()" />
                     </div>
                     <div class="w-full flex h-auto justify-items-center justify-center">
                         <div class="w-full relative overflow-hidden">
@@ -18,17 +22,17 @@
                             </section>
                             <textarea id="source" name="translateFrom" spellcheck="false" autocapitalize="off"
                                 autocorrect="off" autocomplete="off" :placeholder="placesource" cols="30" rows="10"
-                                :class="textToLeft()" @input="preventTyping" v-model="translateFrom"
+                                :class="textToLeft()" @input="preventTyping()" v-model="translateFrom"
                                 class="w-full h-64 rounded-md font-normal py-4 px-3 pr-12 outline-none text-xl resize-none border border-gray-200 bg-gray-100"></textarea>
-                            <button type="button" class="absolute top-2 right-2 z-30 text-3xl" @click="clearTextarea">
-                                <ion-icon name="close-outline"></ion-icon>
+                            <button type="button" class="absolute top-2 right-2 z-10 text-3xl" @click="clearTextarea()">
+                                <ion-icon name="close-outline" />
                             </button>
                             <section class="absolute bottom-0 left-1 z-30 p-2 w-full">
                                 <button type="button" @click="CopyTo()">
-                                    <ion-icon class="text-2xl font-normal" name="clipboard-outline"></ion-icon>
+                                    <ion-icon class="text-2xl font-normal" name="clipboard-outline" />
                                 </button>
                                 <button type="button">
-                                    <ion-icon class="text-2xl font-normal pl-1" name="volume-high-outline"></ion-icon>
+                                    <ion-icon class="text-2xl font-normal pl-1" name="volume-high-outline" />
                                 </button>
                             </section>
                         </div>
@@ -47,8 +51,9 @@
                         </div>
                     </div>
                     <div class="block w-fit mx-auto">
-                        <button type="submit" :disabled="Isdisabled" :class="btnColor" class="flex items-center py-2 px-6 capitalize text-lg font-light rounded-md mx-auto text-white">
-                            <LoaderSvg :class="isLoading"/>
+                        <button type="submit" :disabled="Isdisabled" :class="btnColor"
+                            class="flex items-center py-2 px-6 capitalize text-lg font-light rounded-md mx-auto text-white">
+                            <LoaderSvg :class="isLoading" />
                             {{ buttonValue }}
                         </button>
                     </div>
@@ -205,7 +210,7 @@ export default {
     },
 
     methods: {
-        // this method is fetch data ferom server using Api and Fetch method
+        // this method is fetch data from server using Api and Fetch method
         translateEngine() {
             this.buttonValue = "Loading..."
             this.isLoading = "block"
