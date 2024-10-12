@@ -1,10 +1,10 @@
 <template>
-    <div :class="CustomClass" class="main_hero text-center w-11/12 mx-auto mt-40">
+    <div :class="CustomClass" class="main_hero text-center w-11/12 mx-auto">
         <h4 :id="CustomId" class="text-base text-blue-800 capitalize font-medium">{{ heading }}</h4>
-        <h1 class="text-balance text-5xl my-2 capitalize font-semibold text-black text-opacity-90">
+        <h1 class="text-balance text-5xl my-2 mt-4 capitalize font-semibold text-black text-opacity-90">
             {{ title }}
         </h1>
-        <p class="font-light text-balance text-xl text-opacity-80 lowercase text-gray-900">{{ slogan }}</p>
+        <p class="font-normal capitalize text-balance text-xl text-opacity-80 text-gray-900">{{ slogan }}</p>
     </div>
 </template>
 
