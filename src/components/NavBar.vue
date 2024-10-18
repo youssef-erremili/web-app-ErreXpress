@@ -1,44 +1,7 @@
 <template>
-    <!-- <nav>
-        <div class="p-5" id="navbarContainer">
-            <div id="navbar"
-                class="navbar flex justify-between items-center text-white w-8/12 mx-auto py-5 px-6 my-4 rounded-full shadow-lg bg-black">
-                <section class="logo">
-                    <router-link to="/" class="font-light capitalize">
-                        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                            {{ brandName }}
-                        </span>
-                    </router-link>
-                </section>
-                <section class="links">
-                    <ul class="flex">
-                        <li class="mx-2">
-                            <router-link to="/" class="font-light capitalize">home</router-link>
-                        </li>
-                        <li class="mx-2">
-                            <router-link to="/services" class="font-light capitalize">Services</router-link>
-                        </li>
-                        <li class="mx-2">
-                            <router-link to="/contact" class="font-light capitalize">contact</router-link>
-                        </li>
-                        <li class="mx-2">
-                            <router-link to="/translate" class="font-light capitalize">translate</router-link>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <ul>
-                        <li class="mx-2">
-                            <router-link to="/" class="font-light capitalize">Get started</router-link>
-                        </li>
-                    </ul>
-                </section>
-            </div>
-        </div>
-    </nav> -->
-    <div class="navbar">
-        <nav class="py-1 px-10 flex justify-between items-center bg-white shadow-md">
-            <div class="brand bg-red-400 block">
+    <div class="bg-green-400">
+        <nav class="py-1 px-10 flex justify-between items-center backdrop-filter">
+            <div class="mix-blend-multiply">
                 <router-link to="/">
                     <img src="../../public/images/errehub-wight.webp" class="h-20" alt="brand logo">
                 </router-link>
@@ -46,12 +9,14 @@
             <div>
                 <ul class="flex items-center justify-center">
                     <li class="mx-4">
-                        <router-link activeClass="bg-gray-50" to="/"
-                            class="leading-6 text-gray-900 text-base font-medium py-2 px-4 rounded capitalize">home</router-link>
+                        <router-link activeClass="bg-indigo-400" to="/"
+                            class="leading-6 text-white text-base font-medium py-2 px-4 rounded capitalize">
+                            home
+                        </router-link>
                     </li>
                     <li class="mx-4 relative">
                         <button type="button" @click="toggle()"
-                            class="flex items-center text-gray-900 text-base font-medium rounded capitalize">
+                            class="flex items-center text-white text-base font-medium rounded capitalize">
                             <ion-icon class="mr-0.5" :name="icon" />
                             Services
                         </button>
@@ -80,8 +45,10 @@
                                         </router-link>
                                     </div>
                                 </div>
-                                <div class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
-                                    <div class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                <div
+                                    class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
+                                    <div
+                                        class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                                         <svg class="h-6 w-6 text-gray-600 group-hover:text-indigo-600" fill="none"
                                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                             aria-hidden="true" data-slot="icon">
@@ -99,22 +66,43 @@
                                         </router-link>
                                     </div>
                                 </div>
+                                <div
+                                    class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
+                                    <div
+                                        class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                                        <svg class="h-6 w-6 text-gray-600 group-hover:text-indigo-600" fill="none"
+                                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                            aria-hidden="true" data-slot="icon">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M7.864 4.243A7.5 7.5 0 0 1 19.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 0 0 4.5 10.5a7.464 7.464 0 0 1-1.15 3.993m1.989 3.559A11.209 11.209 0 0 0 8.25 10.5a3.75 3.75 0 1 1 7.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 0 1-3.6 9.75m6.633-4.596a18.666 18.666 0 0 1-2.485 5.33" />
+                                        </svg>
+                                    </div>
+                                    <div @click="removeToggle()" class="flex-auto cursor-pointer">
+                                        <router-link to="/correcter"
+                                            class="capitalize block font-semibold text-gray-900">
+                                            grammer cheaker
+                                            <p class="capitalize mt-1 text-gray-600 font-normal">
+                                                Use our service to correct anything you want
+                                            </p>
+                                        </router-link>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </li>
                     <li class="mx-4">
-                        <router-link activeClass="bg-gray-50" to="/contact"
-                            class="leading-6 text-gray-900 text-base font-medium py-2 px-4 rounded capitalize">contact</router-link>
+                        <router-link activeClass="bg-indigo-400" to="/contact"
+                            class="leading-6 text-white text-base font-medium py-2 px-4 rounded capitalize">contact</router-link>
                     </li>
                     <li class="mx-4">
-                        <router-link activeClass="bg-gray-50" to="/correcter"
-                            class="leading-6 text-gray-900 text-base font-medium py-2 px-4 rounded capitalize">correcter</router-link>
+                        <router-link activeClass="bg-indigo-400" to="/translation"
+                            class="leading-6 text-white text-base font-medium py-2 px-4 rounded capitalize">blog</router-link>
                     </li>
                 </ul>
             </div>
             <div class="bg-indigo-400 rounded-md">
-                <router-link to="/" class="inline-block py-2 px-4 text-white text-base font-medium capitalize">Get
-                    started
+                <router-link to="/" class="inline-block py-2 px-4 text-white text-base font-medium capitalize">
+                    Get started
                 </router-link>
             </div>
         </nav>
@@ -136,11 +124,7 @@ export default {
             this.isOpen = this.isOpen == "hidden" ? "block" : "hidden"
             this.icon = this.icon == "chevron-down-outline" ? "chevron-up-outline" : "chevron-down-outline"
         },
-        selectService(servicePath) {
-            this.isOpen = "hidden"; 
-            this.icon = "chevron-down-outline"; 
-            this.$router.push(servicePath);
-        },
+        
         removeToggle() {
             this.isOpen = "hidden"
         }
