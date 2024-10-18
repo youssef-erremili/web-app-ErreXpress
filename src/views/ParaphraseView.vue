@@ -8,10 +8,11 @@
             <div class="mx-auto bg-white py-14 px-10 mb-40 rounded-lg shadow-md w-9/12 items-center mt-20">
                 <div class="flex">
                     <div class="w-3/4 relative">
-                        <InputField v-model="inputText" @input="preventTyping()" CustomClass="w-full h-64 rounded-md text-black-300 text-base" />
+                        <InputField v-model="inputText" @input="preventTyping()"
+                            CustomClass="w-full h-64 rounded-md text-black-300 text-base" />
                         <section>
-                            <CustomButton @click="clearTextarea()" :buttontype="'button'" :buttonname="''"
-                                :buttonicon="'close-outline'" class="absolute top-3 right-2 z-30 text-xl" ></CustomButton>
+                            <CustomButton :buttontype="'button'" :buttonname="''" :buttonicon="'close-outline'"
+                                class="absolute top-3 right-2 z-10 text-xl" @click="clearTextarea()" />
                         </section>
                         <section class="p-1 absolute right-1 bottom-3">
                             <p class="font-normal text-slate-500 text-sm">{{ exchange }}/{{ SentenceLimit }} Words</p>
@@ -49,8 +50,8 @@
                         <div v-for="(item, index) in paraphrasedText" :key="index"
                             class="flex items-start justify-between bg-gray-50 rounded-md py-4 px-2 mt-3 mb-5">
                             <p class="text-base inline-block text-gray-800">{{ item }}</p>
-                            <CustomButton @click="copyParaphrase(item, index)" :buttontype="'button'" :buttonname="isCopied"
-                                :buttonicon="'copy'"
+                            <CustomButton @click="copyParaphrase(item, index)" :buttontype="'button'"
+                                :buttonname="isCopied" :buttonicon="'copy'"
                                 class="flex justify-center items-center bg-indigo-500 py-2 px-6 capitalize text-sm rounded-md text-white" />
                         </div>
                     </div>
@@ -65,6 +66,9 @@ import LoaderSvg from '@/components/LoaderSvg.vue';
 import SkeletonLoading from '@/components/SkeletonLoading.vue';
 import SelectInput from '@/components/SelectInput.vue';
 import CustomButton from '@/components/CustomButton.vue';
+
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
     name: 'ParaphraseView',
@@ -88,7 +92,7 @@ export default {
             isColor: "",
             isCopied: "copy",
             exchange: 0,
-            exampleText: "copy",
+            exampleText: "",
             SentenceLength: [],
             SentenceLimit: 100,
             supportedLanguages: [
@@ -121,8 +125,15 @@ export default {
             this.isLoading = "block";
             this.isLoaded = "hidden";
             this.paraphrasedText = [];
-            // this.isCopied = "copy"
-
+            toast("Your content is being prepared.", {
+                "theme": "colored",
+                "type": "info",
+                "autoClose": 2000,
+                "position": "bottom-right",
+                "hideProgressBar": true,
+                "transition": "slide",
+                "dangerouslyHTMLString": true
+            })
             const url = "https://api.ai21.com/studio/v1/paraphrase";
             const apiKey = "2IzQzM2Wywgjys8OfgKTyFgOqRS08kOk";
 
@@ -147,10 +158,28 @@ export default {
                     this.buttonValue = "paraphrase";
                     this.isLoading = "hidden";
                     this.isLoaded = "block";
+                    toast("Content is ready!", {
+                        "theme": "colored",
+                        "type": "success",
+                        "autoClose": 2000,
+                        "position": "bottom-right",
+                        "hideProgressBar": true,
+                        "transition": "slide",
+                        "dangerouslyHTMLString": true
+                    })
                     this.handleSuggestion(data.suggestions);
                 })
                 .catch(err => {
                     console.log("Error while paraphrasing: " + err.message);
+                    toast("Error while paraphrasing.", {
+                        "theme": "colored",
+                        "type": "error",
+                        "autoClose": 2000,
+                        "position": "bottom-right",
+                        "hideProgressBar": true,
+                        "transition": "slide",
+                        "dangerouslyHTMLString": true
+                    })
                 });
         },
 
@@ -159,6 +188,15 @@ export default {
             if (this.inputText.trim() === '') {
                 this.alertMsg = "Fill in the textarea to proceed.";
                 this.isColor = "text-red-600"
+                toast("Fill in the textarea to proceed.", {
+                    "theme": "colored",
+                    "type": "warning",
+                    "autoClose": 2000,
+                    "position": "bottom-right",
+                    "hideProgressBar": true,
+                    "transition": "slide",
+                    "dangerouslyHTMLString": true
+                })
             } else {
                 this.paraphraseEngine();
                 this.alertMsg = "";
@@ -173,49 +211,62 @@ export default {
         },
         
         // copy method 
-        copyParaphrase(text, option) {
+        copyParaphrase(text) {
             navigator.clipboard.writeText(text)
                 .then(() => {
                     this.alertMsg = "Text copied to clipboard!";
                     this.isColor = "text-green-600"
-                    // this.isCopied = "copied!"
-                    this.paraphrasedText.forEach((btn), ()=> {
-                        btn.onClick = function () {
-                            console.log(btn)
-                        }
+                    toast(`Text copied: "${text}"`, {
+                        "theme": "colored",
+                        "type": "success",
+                        "autoClose": 2000,
+                        "position": "bottom-right",
+                        "hideProgressBar": true,
+                        "transition": "slide",
+                        "dangerouslyHTMLString": true
                     })
                     setTimeout(() => {
                         this.alertMsg = null;
-                    }, 4000);
-
-
-                    // if (this.paraphrasedText.indexOf(text) === option) {
-                    //     this.isCopied = "test"
-                    // }
+                    }, 2000);
                 })
                 .catch(err => {
                     this.alertMsg = "Could not copy text!", err;
                     this.isColor = "text-red-600"
+                    toast("Could not copy text!", {
+                        "theme": "colored",
+                        "type": "error",
+                        "autoClose": 2000,
+                        "position": "bottom-right",
+                        "hideProgressBar": true,
+                        "transition": "slide",
+                        "dangerouslyHTMLString": true
+                    })
                 });
         },
 
-        // try it function
-        tryItFunc() {
-            // this.inputText = 
-            // this.handleEmptyInp()
-            console.log(this.exampleText)
-        }
-    },
-    watch: {
-        // prevent user to not typing when reach limit 
         preventTyping() {
-            // this.SentenceLength = this.inputText.split(' ');
-            // this.exchange = this.SentenceLength.length;
-            // this.alertMsg = "";
-            console.log(this.SentenceLength);
-            
+            if (this.inputText.trim() === '') {
+                this.exchange = 0
+            }
+            else {
+                this.SentenceLength = this.inputText.split(' ');
+                this.exchange = this.SentenceLength.length;
+                this.alertMsg = "";
+            }
         },
-    }
+
+        // clear textarea
+        // clearTextarea() {
+        //     // this.inputText = ""
+        //     // console.log(this.inputText)
+        // },
+        // try it function
+        // tryItFunc() {
+        //     // this.inputText = "jjd"
+        //     // this.handleEmptyInp()
+        //     // console.log("jhdjdj")
+        // }
+    },
 }
 </script>
 
