@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import ParaphraseView from '@/views/paraphraseView.vue'
 import TranslateView from '@/views/TranslateView.vue'
+import correcterView from '@/views/CorrecterView.vue'
 import ContactView from '@/views/ContactView.vue'
 
 const routes = [
@@ -25,7 +26,7 @@ const routes = [
     {
         path: '/correcter',
         name: "correcter",
-        component: ContactView
+        component: correcterView
     },
     {
         path: '/contact',
