@@ -10,15 +10,15 @@
                     <div class="options flex items-center justify-between py-1">
                         <SelectInput v-model="source" name="source" :options="langaueSymbole" />
                         <button type="button" class="cursor-pointer text-3xl" @click="exChange()">
-                            <ion-icon name="swap-horizontal-outline"></ion-icon>
+                            <ion-icon name="swap-horizontal-outline" />
                         </button>
                         <SelectInput v-model="target" name="target" :options="langaueSymbole"
                             @change="tranaslateOnChange()" />
                     </div>
                     <div class="w-full flex h-auto justify-items-center justify-center">
                         <div class="w-full relative overflow-hidden">
-                            <section class="absolute right-2 bottom-2 z-30 p-2">
-                                <span :class="alertColor">{{ sizeLength }} / {{ limitLength }}</span>
+                            <section class="absolute right-2 bottom-2 font-normal text-slate-500 text-sm">
+                                <span :class="lenghtColor">{{ sizeLength }} / {{ limitLength }}</span>
                             </section>
                             <textarea id="source" name="translateFrom" spellcheck="false" autocapitalize="off"
                                 autocorrect="off" autocomplete="off" :placeholder="placesource" cols="30" rows="10"
@@ -45,7 +45,7 @@
                             </textarea>
                             <section class="w-full absolute -mt-12 p-2 z-50">
                                 <button type="button" @click="CopyFrom()">
-                                    <ion-icon class="text-2xl font-normal pl-1" name="copy-outline"></ion-icon>
+                                    <ion-icon class="text-2xl font-normal pl-1" name="copy-outline" />
                                 </button>
                             </section>
                         </div>
@@ -67,23 +67,23 @@
                 </ul>
             </div>
         </main>
-
     </div>
 </template>
 
 <script>
-import { Notyf } from 'notyf'
-import 'notyf/notyf.min.css'
 import SelectInput from '@/components/SelectInput.vue'
 import InputField from '@/components/InputField.vue';
 import LoaderSvg from '@/components/LoaderSvg.vue';
+
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default {
     name: 'TranslateView',
     components: {
         SelectInput,
         InputField,
-        LoaderSvg
+        LoaderSvg,
     },
     data() {
         return {
@@ -98,11 +98,10 @@ export default {
             placetarget: 'translation',
             languageChange: '',
             relatedKeyWord: [],
-            notyf: null,
             sizeLength: 0,
             limitLength: 150,
             Isdisabled: false,
-            alertColor: "",
+            lenghtColor: "",
             btnColor: "bg-indigo-500",
             langaueSymbole: [
                 { value: 'am-ET', text: 'Amharic' },
@@ -205,10 +204,6 @@ export default {
         }
     },
 
-    created() {
-        this.notyf = new Notyf()
-    },
-
     methods: {
         // this method is fetch data from server using Api and Fetch method
         translateEngine() {
@@ -226,18 +221,35 @@ export default {
                     this.handleKeyWord(data.matches)
                 })
                 .catch((error) => {
-                    this.notyf.error('Failed to fetch data content.')
+                    this.isLoading = "hidden"
+                    this.buttonValue = "translate"
                     console.error('Failed to fetch data content.', error)
+                    toast("Failed to fetch data content", {
+                        "theme": "colored",
+                        "type": "error",
+                        "autoClose": 2000,
+                        "position": "bottom-right",
+                        "hideProgressBar": true,
+                        "transition": "slide",
+                        "dangerouslyHTMLString": true
+                    })
                 })
         },
 
         // handler the error of empty field
         handleEmptyInp() {
             if (this.translateFrom.trim() === '') {
-                this.notyf.error('Type text for translation.')
-                return this.notyf.dismissAll()
+                toast("Type text for translation!", {
+                    "theme": "colored",
+                    "type": "error",
+                    "autoClose": 2000,
+                    "position": "bottom-right",
+                    "hideProgressBar": true,
+                    "transition": "slide",
+                    "dangerouslyHTMLString": true
+                })
             } else {
-                return this.translateEngine()
+                return this.translateEngine();
             }
         },
 
@@ -295,9 +307,27 @@ export default {
                 .then((text) => {
                     this.translateFrom = text.trim()
                     this.translateEngine()
+                    toast("Copied text paste successfully", {
+                        "theme": "colored",
+                        "type": "success",
+                        "autoClose": 2000,
+                        "position": "bottom-right",
+                        "hideProgressBar": true,
+                        "transition": "slide",
+                        "dangerouslyHTMLString": true
+                    })
                 })
                 .catch((err) => {
                     console.error('Failed to read clipboard contents: ', err)
+                    toast("Something went wrong", {
+                        "theme": "colored",
+                        "type": "error",
+                        "autoClose": 2000,
+                        "position": "bottom-right",
+                        "hideProgressBar": true,
+                        "transition": "slide",
+                        "dangerouslyHTMLString": true
+                    })
                 })
         },
 
@@ -305,7 +335,16 @@ export default {
         CopyFrom() {
             if (this.translateTo.trim() !== '') {
                 this.$refs.textarea.focus();
-                this.document.execCommand('copy');
+                document.execCommand('copy');
+                toast("You copied text successfully", {
+                    "theme": "colored",
+                    "type": "success",
+                    "autoClose": 2000,
+                    "position": "bottom-right",
+                    "hideProgressBar": true,
+                    "transition": "slide",
+                    "dangerouslyHTMLString": true
+                })
             }
         },
 
@@ -313,12 +352,21 @@ export default {
         preventTyping() {
             this.sizeLength = this.translateFrom.length
             if (this.translateFrom.length >= this.limitLength) {
-                this.alertColor = "text-red-600"
+                this.lenghtColor = "text-red-600"
                 this.btnColor = "bg-gray-400"
                 this.Isdisabled = true
+                toast("You've reached the maximum length", {
+                    "theme": "colored",
+                    "type": "warning",
+                    "autoClose": 2000,
+                    "position": "bottom-right",
+                    "hideProgressBar": true,
+                    "transition": "slide",
+                    "dangerouslyHTMLString": true
+                })
             }
             else {
-                this.alertColor = ""
+                this.lenghtColor = ""
                 this.btnColor = "bg-indigo-500"
                 this.Isdisabled = false
             }
