@@ -1,5 +1,5 @@
 <template>
-    <div :class="CustomClass" class="main_hero text-center w-11/12 mx-auto">
+    <div :class="CustomClass" class="text-center w-11/12 mx-auto">
         <h4 :id="CustomId" class="text-base text-blue-800 capitalize font-medium">{{ heading }}</h4>
         <h1 class="text-balance text-5xl my-2 mt-4 capitalize font-semibold text-black text-opacity-90">
             {{ title }}
