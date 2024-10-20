@@ -1,6 +1,6 @@
 <template>
-    <button :type="buttontype" class="flex justify-center items-center">
-        <ion-icon class="mr-1" :name="buttonicon"></ion-icon>
+    <button class="flex justify-center items-center">
+        <ion-icon class="mr-1" :name="buttonicon" />
         {{ buttonname }}
     </button>
 </template>
@@ -18,11 +18,6 @@ export default {
             Required: false,
             default: ''
         },
-        buttontype: {
-            Type: String,
-            Required: true,
-            default: 'button'
-        }
     }
 }
 </script>
