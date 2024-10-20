@@ -22,7 +22,5 @@ app.component("ServiceSection", ServiceSection)
 app.component("FooterSection", FooterSection)
 app.component("InputField", InputField)
 
-
-
 app.use(router);
 app.mount('#app')
