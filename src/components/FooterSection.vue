@@ -1,5 +1,5 @@
 <template>
-    <footer class="text-gray-400 px-20 py-10 w-full mt-32 bg-slate-950">
+    <footer class="text-gray-400 px-20 py-10 w-full mt-32 bg">
         <div class="max-w-lg sm:mx-auto sm:text-center backdrop-filter">
             <img src="/images/errehub-dark.webp" class="backdrop-filter sm:mx-auto" />
             <ul class="items-center justify-center mt-8 space-y-5 sm:flex sm:space-x-4 sm:space-y-0">
@@ -59,15 +59,15 @@ export default {
                     name: 'Home'
                 },
                 {
-                    href: '',
+                    href: '/',
                     name: 'Services'
                 },
                 {
-                    href: '',
+                    href: '/about-us',
                     name: 'About Us'
                 },
                 {
-                    href: '',
+                    href: '/contact',
                     name: 'Contact'
                 }
             ]
@@ -75,3 +75,8 @@ export default {
     },
 }
 </script>
+<style scoped>
+.bg{
+    background-color: #041630;
+}
+</style>
