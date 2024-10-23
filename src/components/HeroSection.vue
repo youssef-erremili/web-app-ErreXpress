@@ -1,10 +1,10 @@
 <template>
-    <div :class="CustomClass" class="text-center w-11/12 mx-auto">
-        <h4 :id="CustomId" class="text-base text-blue-800 capitalize font-medium">{{ heading }}</h4>
-        <h1 class="text-balance text-5xl my-2 mt-4 capitalize font-semibold text-black text-opacity-90">
+    <div class="text-center w-11/12 mx-auto">
+        <h4 class="text-base text-blue-800 capitalize font-medium">{{ heading }}</h4>
+        <h2 class="text-gray-800 text-3xl font-semibold sm:text-4xl capitalize">
             {{ title }}
-        </h1>
-        <p class="font-normal capitalize text-balance text-xl text-opacity-80 text-gray-900">{{ slogan }}</p>
+        </h2>
+        <p class="font-normal lowercase text-balance text-opacity-80 text-gray-900">{{ slogan }}</p>
     </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
     props: {
         heading: {
             type: String,
-            required: true
+            required: false
         },
         title: {
             type: String,
@@ -24,14 +24,6 @@ export default {
             type: String,
             required: false
         },
-        CustomId: {
-            type: String,
-            required: false
-        },
-        CustomClass: {
-            type: String,
-            required: false
-        }
     }
 }
 </script>
