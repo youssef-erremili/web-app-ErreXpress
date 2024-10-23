@@ -1,18 +1,25 @@
 <template>
     <div>
-        <hero-section :CustomId="'heading'" :CustomClass="'mt-20'" :heading="'Free Paraphrasing Tool'"
-            :slogan="'Quickly reword sentences for essays, emails, articles, and more'" />
+        <Breadcrumb />
+        <router-view />
     </div>
     <main>
         <form @submit.prevent.enter="handleEmptyInp()" @keydown.enter="handleEmptyInp()">
             <div class="mx-auto bg-white py-14 px-10 mb-40 rounded-lg shadow-md w-9/12 items-center mt-20">
                 <div class="flex">
                     <div class="w-3/4 relative">
-                        <InputField v-model="inputText" @input="preventTyping()"
-                            CustomClass="w-full h-64 rounded-md text-black-300 text-base" />
+                            <textarea 
+                                spellcheck="false" 
+                                autocapitalize="off" 
+                                autocorrect="off" 
+                                autocomplete="off" 
+                                placeholder="enter your text"
+                                class="w-full h-64 rounded-md py-7 px-4 outline-none resize-none border border-gray-200 ml-1 text-black-300 text-base"
+                                v-model="inputText" 
+                                @input="preventTyping()"></textarea>
                         <section>
-                            <CustomButton :buttontype="'button'" :buttonname="''" :buttonicon="'close-outline'"
-                                class="absolute top-3 right-2 z-10 text-xl" @click="clearTextarea()" />
+                            <CustomButton @click="clearArea()" type="button" :buttonname="''" :buttonicon="'close-outline'"
+                                class="absolute top-2 right-1 z-10 text-xl"  />
                         </section>
                         <section class="p-1 absolute right-1 bottom-3">
                             <p class="font-normal text-slate-500 text-sm">{{ exchange }}/{{ SentenceLimit }} Words</p>
@@ -30,11 +37,11 @@
                     </div>
                 </div>
                 <div class="flex justify-start">
-                    <CustomButton :buttontype="'submit'" :buttonname="buttonValue" :buttonicon="'flash-outline'"
+                    <CustomButton type="submit" :disabled="disabled" :buttonname="buttonValue" :buttonicon="'flash-outline'"
                         class="flex items-center bg-indigo-500 py-2 px-6 capitalize text-base rounded-md mt-6 text-white">
-                        <loader-svg :class="isLoading" />
+                        <loader-svg v-if="isLoading" />
                     </CustomButton>
-                    <CustomButton @click="tryItFunc()" :buttontype="'button'"
+                    <CustomButton type="button" @click="tryItFunc()"
                         :class="'ml-2 inline-block bg-transparent text-gray-500 py-2 px-6 capitalize text-base rounded-md mt-6 hover:bg-slate-200'"
                         :buttonname="'Try sample text'" :buttonicon="'brush-outline'" />
                 </div>
@@ -43,15 +50,15 @@
                 </div>
                 <div class="">
                     <div class="w-full mt-10 mb-3">
-                        <skeleton-loading :class="isLoading" />
+                        <skeleton-loading v-if="isLoading" />
                     </div>
                     <div class="mt-14" :class="isLoaded">
                         <h3 class="capitalize text-2xl font-medium mb-3 text-slate-900">suggestions :</h3>
                         <div v-for="(item, index) in paraphrasedText" :key="index"
                             class="flex items-start justify-between bg-gray-50 rounded-md py-4 px-2 mt-3 mb-5">
                             <p class="text-base inline-block text-gray-800">{{ item }}</p>
-                            <CustomButton @click="copyParaphrase(item, index)" :buttontype="'button'"
-                                :buttonname="isCopied" :buttonicon="'copy'"
+                            <CustomButton @click="copyParaphrase(item)" type="button" :buttonname="isCopied"
+                                :buttonicon="'copy'"
                                 class="flex justify-center items-center bg-indigo-500 py-2 px-6 capitalize text-sm rounded-md text-white" />
                         </div>
                     </div>
@@ -66,6 +73,7 @@ import LoaderSvg from '@/components/LoaderSvg.vue';
 import SkeletonLoading from '@/components/SkeletonLoading.vue';
 import SelectInput from '@/components/SelectInput.vue';
 import CustomButton from '@/components/CustomButton.vue';
+import Breadcrumb from '@/components/Breadcrumb.vue';
 
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -76,7 +84,8 @@ export default {
         LoaderSvg,
         SkeletonLoading,
         SelectInput,
-        CustomButton
+        CustomButton,
+        Breadcrumb
     },
 
     data() {
@@ -86,13 +95,14 @@ export default {
             buttonValue: "paraphrase",
             Targetlanguage: "English",
             Targetstyle: "general",
-            isLoading: 'hidden',
+            isLoading: false,
             isLoaded: "hidden",
             alertMsg: "",
             isColor: "",
             isCopied: "copy",
             exchange: 0,
-            exampleText: "",
+            disabled: false,
+            exampleText: "The Prophet Muhammad (peace be upon him) received his first revelation in the cave of Hira, marking the beginning of Islam",
             SentenceLength: [],
             SentenceLimit: 100,
             supportedLanguages: [
@@ -122,7 +132,7 @@ export default {
         paraphraseEngine() {
             // Start loading for enhance UX
             this.buttonValue = "Loading...";
-            this.isLoading = "block";
+            this.isLoading = true;
             this.isLoaded = "hidden";
             this.paraphrasedText = [];
             toast("Your content is being prepared.", {
@@ -156,7 +166,7 @@ export default {
                 })
                 .then(data => {
                     this.buttonValue = "paraphrase";
-                    this.isLoading = "hidden";
+                    this.isLoading = false;
                     this.isLoaded = "block";
                     toast("Content is ready!", {
                         "theme": "colored",
@@ -230,9 +240,7 @@ export default {
                     }, 2000);
                 })
                 .catch(err => {
-                    this.alertMsg = "Could not copy text!", err;
-                    this.isColor = "text-red-600"
-                    toast("Could not copy text!", {
+                    toast(`Could not copy text! ${err}`, {
                         "theme": "colored",
                         "type": "error",
                         "autoClose": 2000,
@@ -248,32 +256,50 @@ export default {
             if (this.inputText.trim() === '') {
                 this.exchange = 0
             }
+                // 
             else {
                 this.SentenceLength = this.inputText.split(' ');
                 this.exchange = this.SentenceLength.length;
                 this.alertMsg = "";
+                if (this.exchange >= this.SentenceLimit) {
+                    this.disabled = true 
+                    toast("You reach the allowed limit.", {
+                        "theme": "colored",
+                        "type": "warning",
+                        "autoClose": 2000,
+                        "position": "bottom-right",
+                        "hideProgressBar": true,
+                        "transition": "slide",
+                        "dangerouslyHTMLString": true
+                    })
+                }
+                
+            }
+            },
+
+        // Clear textarea
+        clearArea() {
+            if (this.inputText !== "") {
+                this.inputText = ""
+                toast("The input is now blank!", {
+                    "theme": "colored",
+                    "type": "success",
+                    "autoClose": 2000,
+                    "position": "bottom-right",
+                    "hideProgressBar": true,
+                    "transition": "slide",
+                    "dangerouslyHTMLString": true
+                })
             }
         },
 
-        // clear textarea
-        // clearTextarea() {
-        //     // this.inputText = ""
-        //     // console.log(this.inputText)
-        // },
         // try it function
-        // tryItFunc() {
-        //     // this.inputText = "jjd"
-        //     // this.handleEmptyInp()
-        //     // console.log("jhdjdj")
-        // }
+        tryItFunc() {
+            if (this.inputText == "") {
+                this.inputText = this.exampleText
+                return this.handleEmptyInp()
+            }
+        }
     },
 }
 </script>
-
-<style>
-#heading {
-    color: #1f243c;
-    font-size: 2.7rem !important;
-    margin-top: 1.02rem 0;
-}
-</style>
