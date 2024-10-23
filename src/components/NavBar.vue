@@ -3,7 +3,7 @@
         <nav class="py-1 px-10 flex justify-between items-center backdrop-filter">
             <div class="mix-blend-multiply">
                 <router-link to="/">
-                    <img src="../../public/images/errehub-wight.webp" class="h-20" alt="brand logo">
+                    <img src="/images/errehub-wight.webp" class="h-20" alt="brand logo">
                 </router-link>
             </div>
             <div>
@@ -80,7 +80,7 @@
                                     <div @click="removeToggle()" class="flex-auto cursor-pointer">
                                         <router-link to="/correcter"
                                             class="capitalize block font-semibold text-gray-900">
-                                            grammer cheaker
+                                            grammer checker
                                             <p class="capitalize mt-1 text-gray-600 font-normal">
                                                 Use our service to correct anything you want
                                             </p>
