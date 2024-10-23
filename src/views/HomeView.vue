@@ -1,26 +1,22 @@
 <template>
     <div>
-        <HeaderSection />
+        <header>
+            <header-section />
+        </header>
         <main>
-            <FeatureSection />
-            <ServiceSection />
+            <feature-section />
+            <service-section />
+            <new-letter />
         </main>
         <footer>
-            <FooterSection />
+            <footer-section />
         </footer>
     </div>
 </template>
 
 <script>
 
-import NavBar from '@/components/NavBar.vue';
-
 export default {
     name: "HomeView",
-    components: {
-        NavBar
-    }
 }
 </script>
-
-<style></style>
