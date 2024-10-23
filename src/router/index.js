@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-// import { createMemoryHistory, createRouter } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import ParaphraseView from '@/views/paraphraseView.vue'
 import TranslateView from '@/views/TranslateView.vue'
@@ -11,27 +10,42 @@ const routes = [
     {
         path: '/',
         name: "home",
-        component: HomeView
-    },
-    {
-        path: '/paraphrase',
-        name: "paraphrase",
-        component: ParaphraseView
+        component: HomeView,
+        meta: {
+            breadcrumb: "Home"
+        }
     },
     {
         path: '/translation',
         name: "translation",
-        component: TranslateView
+        component: TranslateView,
+        meta: {
+            breadcrumb: "translation"
+        }
+    },
+    {
+        path: '/paraphrase',
+        name: "paraphrase",
+        component: ParaphraseView,
+        meta: {
+            breadcrumb: "paraphrase"
+        }
     },
     {
         path: '/correcter',
         name: "correcter",
-        component: correcterView
+        component: correcterView,
+        meta: {
+            breadcrumb: "correcter"
+        }
     },
     {
         path: '/contact',
         name: "contact",
-        component: ContactView
+        component: ContactView,
+        meta: {
+            breadcrumb: "contact"
+        }
     },
 ]
 
