@@ -1,79 +1,81 @@
 <template>
     <div>
-        <hero-section :CustomId="'heading'" :CustomClass="'mt-20'" :heading="'Free translation Tool'"
-            :slogan="'Quickly translate sentences, essays, emails, articles, and more'" />
+        <Breadcrumb />
+        <router-view />
     </div>
-    <div>
-        <main>
-            <div class="w-11/12 mx-auto mt-11">
-                <form @submit.prevent="handleEmptyInp()">
-                    <div class="options flex items-center justify-between py-1">
-                        <SelectInput v-model="source" name="source" :options="langaueSymbole" />
-                        <button type="button" class="cursor-pointer text-3xl" @click="exChange()">
-                            <ion-icon name="swap-horizontal-outline" />
+    <main>
+        <div class="w-11/12 mx-auto mt-11">
+            <form @submit.prevent="handleEmptyInp()">
+                <div class="options flex items-center justify-between py-1">
+                    <SelectInput v-model="source" name="source" :options="langaueSymbole" />
+                    <button type="button" class="cursor-pointer text-3xl" @click="exChange()">
+                        <ion-icon name="swap-horizontal-outline" />
+                    </button>
+                    <SelectInput v-model="target" name="target" :options="langaueSymbole"
+                        @change="tranaslateOnChange()" />
+                </div>
+                <div class="w-full flex h-auto justify-items-center justify-center">
+                    <div class="w-full relative overflow-hidden">
+                        <section class="absolute right-2 bottom-2 font-normal text-slate-500 text-sm">
+                            <span :class="lenghtColor">{{ sizeLength }} / {{ limitLength }}</span>
+                        </section>
+                        <textarea id="source" name="translateFrom" spellcheck="false" autocapitalize="off"
+                            autocorrect="off" autocomplete="off" :placeholder="placesource" cols="30" rows="10"
+                            :class="textToLeft()" @input="preventTyping()" v-model="translateFrom"
+                            class="w-full h-64 rounded-md font-normal py-4 px-3 pr-12 outline-none text-xl resize-none border border-gray-200 bg-gray-100"></textarea>
+                        <button type="button" class="absolute top-2 right-2 z-10 text-3xl" @click="clearTextarea()">
+                            <ion-icon name="close-outline" />
                         </button>
-                        <SelectInput v-model="target" name="target" :options="langaueSymbole"
-                            @change="tranaslateOnChange()" />
-                    </div>
-                    <div class="w-full flex h-auto justify-items-center justify-center">
-                        <div class="w-full relative overflow-hidden">
-                            <section class="absolute right-2 bottom-2 font-normal text-slate-500 text-sm">
-                                <span :class="lenghtColor">{{ sizeLength }} / {{ limitLength }}</span>
-                            </section>
-                            <textarea id="source" name="translateFrom" spellcheck="false" autocapitalize="off"
-                                autocorrect="off" autocomplete="off" :placeholder="placesource" cols="30" rows="10"
-                                :class="textToLeft()" @input="preventTyping()" v-model="translateFrom"
-                                class="w-full h-64 rounded-md font-normal py-4 px-3 pr-12 outline-none text-xl resize-none border border-gray-200 bg-gray-100"></textarea>
-                            <button type="button" class="absolute top-2 right-2 z-10 text-3xl" @click="clearTextarea()">
-                                <ion-icon name="close-outline" />
+                        <section class="absolute bottom-0 left-1 z-30 p-2 w-full">
+                            <button type="button" @click="CopyTo()">
+                                <ion-icon class="text-2xl font-normal" name="clipboard-outline" />
                             </button>
-                            <section class="absolute bottom-0 left-1 z-30 p-2 w-full">
-                                <button type="button" @click="CopyTo()">
-                                    <ion-icon class="text-2xl font-normal" name="clipboard-outline" />
-                                </button>
-                                <button type="button">
-                                    <ion-icon class="text-2xl font-normal pl-1" name="volume-high-outline" />
-                                </button>
-                            </section>
-                        </div>
-                        <div class="w-full relative">
-                            <textarea id="target" name="translateFrom" spellcheck="false" autocapitalize="off"
-                                autocorrect="off" autocomplete="off" :placeholder="placetarget" cols="30" rows="10"
-                                v-model="translateTo" readonly v-on:focus="$event.target.select()" ref="textarea"
-                                :class="textToRight()"
-                                class="w-full h-64 rounded-md font-normal py-4 px-3 pr-4 outline-none text-xl resize-none border border-gray-200 bg-gray-100 ml-1">
+                            <button type="button">
+                                <ion-icon class="text-2xl font-normal pl-1" name="volume-high-outline" />
+                            </button>
+                        </section>
+                    </div>
+                    <div class="w-full relative">
+                        <textarea id="target" name="translateFrom" spellcheck="false" autocapitalize="off"
+                            autocorrect="off" autocomplete="off" :placeholder="placetarget" cols="30" rows="10"
+                            v-model="translateTo" readonly v-on:focus="$event.target.select()" ref="textarea"
+                            :class="textToRight()"
+                            class="w-full h-64 rounded-md font-normal py-4 px-3 pr-4 outline-none text-xl resize-none border border-gray-200 bg-gray-100 ml-1">
                             </textarea>
-                            <section class="w-full absolute -mt-12 p-2 z-50">
-                                <button type="button" @click="CopyFrom()">
-                                    <ion-icon class="text-2xl font-normal pl-1" name="copy-outline" />
-                                </button>
-                            </section>
-                        </div>
+                        <section class="w-full absolute -mt-12 p-2 z-50">
+                            <button type="button" @click="CopyFrom()">
+                                <ion-icon class="text-2xl font-normal pl-1" name="copy-outline" />
+                            </button>
+                        </section>
                     </div>
-                    <div class="block w-fit mx-auto">
-                        <button type="submit" :disabled="Isdisabled" :class="btnColor"
-                            class="flex items-center py-2 px-6 capitalize text-lg font-light rounded-md mx-auto text-white">
-                            <LoaderSvg :class="isLoading" />
-                            {{ buttonValue }}
-                        </button>
-                    </div>
-                </form>
-                <h1 class="text-2xl font-semibold capitalize">Related words :</h1>
-                <ul class="mt-4 mb-10 flex">
-                    <li v-for="(keyword, index) in relatedKeyWord" :key="index"
-                        class="rounded-full clr-related font-normal cursor-pointer bg-related lowercase text-base text-black py-1 px-2 m-2">
-                        {{ keyword }}
-                    </li>
-                </ul>
-            </div>
-        </main>
-    </div>
+                </div>
+                <div class="block w-fit mx-auto">
+                    <button type="submit" :disabled="Isdisabled" :class="btnColor"
+                        class="flex items-center py-2 px-6 capitalize text-lg font-light rounded-md mx-auto text-white">
+                        <LoaderSvg v-if="isLoading" />
+                        {{ buttonValue }}
+                    </button>
+                </div>
+            </form>
+            <h1 class="text-2xl font-semibold capitalize">Related words :</h1>
+            <ul class="mt-4 mb-10 flex">
+                <li v-for="(keyword, index) in relatedKeyWord" :key="index"
+                    class="rounded-full clr-related font-normal cursor-pointer bg-related lowercase text-base text-black py-1 px-2 m-2">
+                    {{ keyword }}
+                </li>
+            </ul>
+        </div>
+    </main>
+    <footer>
+        <footer-section />
+    </footer>
 </template>
 
 <script>
 import SelectInput from '@/components/SelectInput.vue'
 import InputField from '@/components/InputField.vue';
 import LoaderSvg from '@/components/LoaderSvg.vue';
+import Breadcrumb from '@/components/Breadcrumb.vue';
 
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -84,6 +86,7 @@ export default {
         SelectInput,
         InputField,
         LoaderSvg,
+        Breadcrumb,
     },
     data() {
         return {
@@ -92,7 +95,7 @@ export default {
             translateTo: '',
             exchange: '',
             buttonValue: "translate",
-            isLoading: 'hidden',
+            isLoading: false,
             source: 'en-GB',
             target: 'ar-SA',
             placetarget: 'translation',
@@ -203,12 +206,14 @@ export default {
             ]
         }
     },
+    computed: {
 
+    },
     methods: {
         // this method is fetch data from server using Api and Fetch method
         translateEngine() {
             this.buttonValue = "Loading..."
-            this.isLoading = "block"
+            this.isLoading = true
             this.relatedKeyWord = []
             let appUrl = `https://api.mymemory.translated.net/get?q=${this.translateFrom.trim()}!&langpair=${this.source
                 }|${this.target}`
@@ -216,12 +221,12 @@ export default {
                 .then((response) => response.json())
                 .then((data) => {
                     this.buttonValue = "translate"
-                    this.isLoading = "hidden"
+                    this.isLoading = false
                     this.translateTo = data.responseData.translatedText
                     this.handleKeyWord(data.matches)
                 })
                 .catch((error) => {
-                    this.isLoading = "hidden"
+                    this.isLoading = false
                     this.buttonValue = "translate"
                     console.error('Failed to fetch data content.', error)
                     toast("Failed to fetch data content", {
@@ -239,9 +244,9 @@ export default {
         // handler the error of empty field
         handleEmptyInp() {
             if (this.translateFrom.trim() === '') {
-                toast("Type text for translation!", {
+                toast("Type text to translate!", {
                     "theme": "colored",
-                    "type": "error",
+                    "type": "warning",
                     "autoClose": 2000,
                     "position": "bottom-right",
                     "hideProgressBar": true,
@@ -371,7 +376,25 @@ export default {
                 this.Isdisabled = false
             }
         },
-        
+
     },
 }
 </script>
+
+<style scoped>
+.bg-related {
+    background-color: #E1ECFB !important;
+}
+
+.clr-related {
+    color: #1983ff !important;
+}
+
+.reverse-text-right {
+    direction: rtl;
+}
+
+.reverse-text-left {
+    direction: rtl;
+}
+</style>
