@@ -8,18 +8,13 @@
             <div class="mx-auto bg-white py-14 px-10 mb-40 rounded-lg shadow-md w-9/12 items-center mt-20">
                 <div class="flex">
                     <div class="w-3/4 relative">
-                            <textarea 
-                                spellcheck="false" 
-                                autocapitalize="off" 
-                                autocorrect="off" 
-                                autocomplete="off" 
-                                placeholder="enter your text"
-                                class="w-full h-64 rounded-md py-7 px-4 outline-none resize-none border border-gray-200 ml-1 text-black-300 text-base"
-                                v-model="inputText" 
-                                @input="preventTyping()"></textarea>
+                        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off"
+                            placeholder="enter your text"
+                            class="w-full h-64 rounded-md py-7 px-4 outline-none resize-none border border-gray-200 ml-1 text-black-300 text-base"
+                            v-model="inputText" @input="preventTyping()"></textarea>
                         <section>
-                            <CustomButton @click="clearArea()" type="button" :buttonname="''" :buttonicon="'close-outline'"
-                                class="absolute top-2 right-1 z-10 text-xl"  />
+                            <CustomButton @click="clearArea()" type="button" :buttonname="''"
+                                :buttonicon="'close-outline'" class="absolute top-2 right-1 z-10 text-xl" />
                         </section>
                         <section class="p-1 absolute right-1 bottom-3">
                             <p class="font-normal text-slate-500 text-sm">{{ exchange }}/{{ SentenceLimit }} Words</p>
@@ -37,7 +32,8 @@
                     </div>
                 </div>
                 <div class="flex justify-start">
-                    <CustomButton type="submit" :disabled="disabled" :buttonname="buttonValue" :buttonicon="'flash-outline'"
+                    <CustomButton type="submit" :disabled="disabled" :buttonname="buttonValue"
+                        :buttonicon="'flash-outline'"
                         class="flex items-center bg-indigo-500 py-2 px-6 capitalize text-base rounded-md mt-6 text-white">
                         <loader-svg v-if="isLoading" />
                     </CustomButton>
@@ -154,7 +150,7 @@ export default {
                     "Authorization": `Bearer ${apiKey}`
                 },
                 body: JSON.stringify({
-                    text: this.inputText, 
+                    text: this.inputText,
                     style: this.Targetstyle
                 })
             })
@@ -219,7 +215,7 @@ export default {
                 this.paraphrasedText.push(element.text);
             });
         },
-        
+
         // copy method 
         copyParaphrase(text) {
             navigator.clipboard.writeText(text)
@@ -256,13 +252,13 @@ export default {
             if (this.inputText.trim() === '') {
                 this.exchange = 0
             }
-                // 
+            // 
             else {
                 this.SentenceLength = this.inputText.split(' ');
                 this.exchange = this.SentenceLength.length;
                 this.alertMsg = "";
                 if (this.exchange >= this.SentenceLimit) {
-                    this.disabled = true 
+                    this.disabled = true
                     toast("You reach the allowed limit.", {
                         "theme": "colored",
                         "type": "warning",
@@ -273,9 +269,11 @@ export default {
                         "dangerouslyHTMLString": true
                     })
                 }
-                
+                else {
+                    this.disabled = false
+                }
             }
-            },
+        },
 
         // Clear textarea
         clearArea() {

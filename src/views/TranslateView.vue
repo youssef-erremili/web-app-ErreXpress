@@ -73,7 +73,6 @@
 
 <script>
 import SelectInput from '@/components/SelectInput.vue'
-import InputField from '@/components/InputField.vue';
 import LoaderSvg from '@/components/LoaderSvg.vue';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 
@@ -84,7 +83,6 @@ export default {
     name: 'TranslateView',
     components: {
         SelectInput,
-        InputField,
         LoaderSvg,
         Breadcrumb,
     },

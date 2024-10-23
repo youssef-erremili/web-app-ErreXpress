@@ -1,12 +1,6 @@
-:root{
-    --bg-white: #F7F8FB;
-    --blue-color: #313131;
-}
-
-
 ::placeholder {
     font-size: 1.01rem !important;
-    color: var(--blue-color) !important;
+    color: #313131 !important;
     font-weight: 400 !important;
     user-select: none !important;
     text-transform: capitalize !important;

@@ -20,7 +20,7 @@
                             </div>
                             <a href="javascript:void(0)" class="text-[#007bff] text-sm ml-4">
                                 <small class="block">Mail</small>
-                                <strong>info@example.com</strong>
+                                <strong>yousseferremili.dev@gmail.com</strong>
                             </a>
                         </li>
                     </ul>
@@ -70,7 +70,7 @@
                 <input type='text' placeholder='Subject'
                     class="w-full text-gray-800 rounded-md py-2.5 px-4 border text-sm outline-blue-500" />
                 <textarea placeholder='Message' rows="6"
-                    class="w-full text-gray-800 rounded-md px-4 border text-sm pt-2.5 outline-blue-500"></textarea>
+                    class="w-full text-gray-800 rounded-md px-4 border text-sm pt-2.5 outline-blue-500 resize-none"></textarea>
                 <button type='button'
                     class="text-white bg-blue-500 hover:bg-blue-600 rounded-md text-sm px-4 py-3 w-full !mt-6">Send</button>
             </form>

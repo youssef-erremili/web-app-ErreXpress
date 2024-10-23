@@ -238,6 +238,8 @@ export default {
             if (this.content !== "") {
                 this.content = ""
                 this.errors = []
+                this.Words = 0
+                this.Characters = 0
                 toast("The input is now blank!", {
                     "theme": "colored",
                     "type": "success",
