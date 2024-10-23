@@ -95,8 +95,8 @@
                             class="leading-6 text-white text-base font-medium py-2 px-4 rounded capitalize">contact</router-link>
                     </li>
                     <li class="mx-4">
-                        <router-link activeClass="bg-indigo-400" to="/translation"
-                            class="leading-6 text-white text-base font-medium py-2 px-4 rounded capitalize">blog</router-link>
+                        <router-link activeClass="bg-indigo-400" to="/about-us"
+                            class="leading-6 text-white text-base font-medium py-2 px-4 rounded capitalize">about us</router-link>
                     </li>
                 </ul>
             </div>

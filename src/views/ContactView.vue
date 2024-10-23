@@ -1,6 +1,11 @@
 <template>
+    <div>
+        <Breadcrumb />
+        <router-view />
+    </div>
     <div class="mt-6">
-        <div class="grid sm:grid-cols-2 items-start gap-14 p-8 mx-auto max-w-4xl bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md font-[sans-serif]">
+        <div
+            class="grid sm:grid-cols-2 items-start gap-14 p-8 mx-auto max-w-4xl bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-md font-[sans-serif]">
             <div>
                 <h1 class="text-gray-800 text-3xl font-extrabold">Let's Talk</h1>
                 <p class="text-sm text-gray-500 mt-4">Have some big idea or brand to develop and need help? Then reach
@@ -80,8 +85,12 @@
 </template>
 
 <script>
+import Breadcrumb from '@/components/Breadcrumb.vue';
 
 export default {
-
+    name: "AboutView",
+    components: {
+        Breadcrumb
+    }
 }
 </script>
