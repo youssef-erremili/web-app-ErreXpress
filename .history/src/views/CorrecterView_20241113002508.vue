@@ -24,7 +24,7 @@
                     </div>
                     <div class="relative h-full">
                         <textarea v-model="content" @input="countWordsAndChars()" spellcheck="false"
-                            autocorrect="off" autocomplete="off" placeholder="enter your text"
+                            autocapitalize="off" autocorrect="off" autocomplete="off" placeholder="enter your text"
                             class="bg-slate-50 w-full h-full border-none rounded-md py-4 px-3 pr-4 outline-none resize-none border border-gray-200 ml-1"></textarea>
                     </div>
                     <div class="flex items-center absolute left-0 bottom-0">
