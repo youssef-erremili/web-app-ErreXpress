@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeView from '@/views/HomeView.vue'
-import ParaphraseView from '@/views/ParaphraseView.vue'
+import ParaphraseView from '@/views/araphraseView.vue'
 import TranslateView from '@/views/TranslateView.vue'
 import correcterView from '@/views/CorrecterView.vue'
 import ContactView from '@/views/ContactView.vue'
